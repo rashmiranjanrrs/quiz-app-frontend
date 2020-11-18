@@ -5,7 +5,7 @@ import Main from '../Main';
 import Quiz from '../Quiz';
 import Loader from '../Loader';
 
-import { PATH_BASE, AMOUNT } from '../../api';
+import { PATH_BASE, AMOUNT, GET_QUIZZES } from '../../api';
 
 class App extends Component {
   constructor(props) {
@@ -15,16 +15,22 @@ class App extends Component {
       isQuizStart: false,
       API: null,
       countdownTime: null,
-      isLoading: false
+      isLoading: false,
+      quizId: null,
     };
 
     this.startQuiz = this.startQuiz.bind(this);
     this.backToHome = this.backToHome.bind(this);
   }
 
-  startQuiz() {
-    const API = `${PATH_BASE + AMOUNT + 10 }`;
-    this.setState({ isQuizStart: true, API, countdownTime: 20 });
+  startQuiz(id,fetch_question_online) {
+    var API = '';
+    if(fetch_question_online === false){
+      API = `${GET_QUIZZES + id }`;
+    }else{
+      API = `${PATH_BASE + AMOUNT + 10 }`;
+    }
+    this.setState({ isQuizStart: true, API, countdownTime: 20, quizId: id });
   }
 
   backToHome() {
@@ -41,7 +47,7 @@ class App extends Component {
   }
 
   render() {
-    const { isQuizStart, API, countdownTime, isLoading } = this.state;
+    const { isQuizStart, API, countdownTime, isLoading, quizId } = this.state;
 
     return (
       <Fragment>
@@ -52,6 +58,7 @@ class App extends Component {
             API={API}
             countdownTime={countdownTime}
             backToHome={this.backToHome}
+            quizId={quizId}
           />
         )}
         {isLoading && <Loader />}

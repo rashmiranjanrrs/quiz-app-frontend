@@ -45,15 +45,15 @@ class Header extends Component {
     }
 
     return (
-      <Menu stackable inverted size="massive">
+      <Menu stackable size="massive">
         <Menu.Item>
           <h1
             style={{
-              color: '#2185D0',
+              color: 'black',
               cursor: 'pointer'
             }}
           >
-            The QuizApp
+            Quiz
           </h1>
         </Menu.Item>
 

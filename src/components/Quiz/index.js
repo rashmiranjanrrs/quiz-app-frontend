@@ -19,6 +19,7 @@ import Offline from '../Offline';
 
 import he from 'he';
 import { getRandomNumber } from '../../utils/getRandomNumber';
+import { RESULT } from '../../api';
 
 class Quiz extends Component {
   constructor(props) {
@@ -57,7 +58,7 @@ class Quiz extends Component {
       .then(result => setTimeout(() => this.setData(result.results), 1000))
       .catch(error => setTimeout(() => this.resolveError(error), 1000));
   }
-
+  
   resolveError(error) {
     if (!navigator.onLine) {
       this.setState({ isOffline: true });
@@ -86,7 +87,7 @@ class Quiz extends Component {
         }
       });
     }
-
+   
     const quizData = results;
     const { questionIndex } = this.state;
     const outPut = getRandomNumber(0, 3);
@@ -98,14 +99,25 @@ class Quiz extends Component {
 
   handleItemClick(e, { name }) {
     const {
-      userSlectedAns,
       quizData,
       questionIndex,
     } = this.state;
     this.setState({ userSlectedAns: name });
-    console.log(name);
-    if (userSlectedAns === he.decode(quizData[questionIndex].correct_answer)) {
-      this.state.active = 'green';
+   
+    if (name === he.decode(quizData[questionIndex].correct_answer)) {
+      document.getElementById(name).style.backgroundColor = 'green';
+      setTimeout(() => {
+        this. handleNext();
+      }, 1000);
+     
+      console.log(document.getElementById(name));
+    }else{
+      document.getElementById(name).style.backgroundColor = 'red';
+      document.getElementById(he.decode(quizData[questionIndex].correct_answer)).style.backgroundColor = 'green';
+      setTimeout(() => {
+        this. handleNext();
+      }, 900);
+      
     }
     
   }
@@ -141,7 +153,17 @@ class Quiz extends Component {
         options: null,
         questionsAndAnswers
       });
+      // const { quizId } = this.props;
+      // console.log(correctAnswers + point);
+      // fetch(RESULT,{
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //     'Authorization': `Token ${quizId}`
+      //   },
+      //   body: JSON.stringify({'quiz':quizId, 'correct_answers': correctAnswers + point, 'worng_answers': quizData.length - correctAnswers + point})
 
+      // })
       return;
     }
 
@@ -312,8 +334,9 @@ class Quiz extends Component {
                               key={decodedOption}
                               name={decodedOption}
                               active={userSlectedAns === decodedOption}
+                              id={decodedOption}
                               onClick={this.handleItemClick}
-                              // style={{backgroundColor: this.state.bgColor }}
+                              style={{backgroundColor: this.state.bgColor }}
                             >
                               <b style={{ marginRight: '8px' }}>{letter}</b>
                               {decodedOption}
