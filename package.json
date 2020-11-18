@@ -1,12 +1,12 @@
 {
-  "name": "quiz-app",
-  "version": "4.3.0",
+  "name": "quiz",
+  "version": "0.0.1",
   "private": true,
   "author": {
-    "name": "Safdar Jamal",
-    "url": "https://safdarjamal.github.io"
+    "name": "Rashmi Ranjan  Sahoo",
+    "url": "https://rashmiranjanrrs.netlify.app"
   },
-  "homepage": "https://safdarjamal.github.io/quiz-app",
+  "homepage": "https://quiz.loopinger.com",
   "dependencies": {
     "he": "^1.2.0",
     "react": "^16.12.0",
